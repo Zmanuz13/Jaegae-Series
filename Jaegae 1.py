@@ -1,7 +1,7 @@
 #Inizio progetti Jaegae (재개),che segnano la ripresa della programmazione,e più precisamente la programmazione con Python
 #A seguito della serie Shibal (시발),i primi progetti sperimentali,e della serie Mirae (미래),la serie di progetti nata con l'intento di iniziare a programmare seriamente,nasce Jaegae (재개)
 #Introduzione a Jaegae (재개):Questa serie di progetti segnà il mio nuovo inizio con la programmazione,dopo circa 2/3 mesi di pausa.
-#Jaegae (재개) V2
+#Jaegae (재개) V3
 #Primo programma ripresa,BAEM(뱀),gioco snake.
 import pygame
 import random as rd
@@ -24,8 +24,11 @@ testo_game_over = font.render("GAME OVER", True, (255, 0, 0))
 testo_vittoria = font.render("VITTORIA", True, (255, 215, 0))
 testo_restart = font.render("Premi SPAZIO per Rigiocare", True, (255, 255, 255))
 def posiziona_sagwa():
-    sagwa.x=rd.randint(0,19)*25
-    sagwa.y=rd.randint(0,19)*25
+    while True:
+        sagwa.x = rd.randint(0, 19) * 25
+        sagwa.y = rd.randint(0, 19) * 25
+        if not any(sagwa.colliderect(part) for part in snake):
+            break
     return sagwa
 posiziona_sagwa()
 while running:
@@ -34,7 +37,23 @@ while running:
         game_over = True
     screen.fill((0, 0, 0))
     testo_score = font.render(f"Score: {score}/399", True, (255, 255, 255))
-    clock.tick(5)
+    if score<5:
+        clock.tick(5)
+    elif 5<=score<25:
+        clock.tick(6)
+    elif 25<=score<75:
+        clock.tick(7)
+    elif 75<=score<175:
+        clock.tick(8)
+    elif 175<=score<225:
+        clock.tick(9)
+    elif 225<=score<300:
+        clock.tick(10)
+    elif 300<=score<349:
+        clock.tick(11)
+    elif 349<=score<=399:
+        clock.tick(12)
+
     pygame.draw.rect(screen, (255, 0, 0), sagwa)
     if game_over and not win:
         screen.blit(testo_game_over, (175, 150))
@@ -84,7 +103,7 @@ while running:
 
     for goyangi in snake:
         pygame.draw.rect(screen, (157, 255, 20),goyangi)
-    screen.blit(testo_score, (330, 0))
+    screen.blit(testo_score, (325, 0))
     pygame.display.flip()
 
 
